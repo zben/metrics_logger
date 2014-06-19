@@ -104,7 +104,7 @@ module MetricsLogger
       raise "Must specify endpoint in MetricsLogger configuration" unless configuration.endpoint
 
       while true
-        sleep 60
+        sleep configuration.sync_interval
         sync
       end
     end
