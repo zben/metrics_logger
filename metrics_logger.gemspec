@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Ben Zhang"]
   spec.email         = ["bzhang@legendben.com"]
   spec.summary       = %q{sends application metrics to opentsdb database.}
-  spec.description   = %q{sends application metrics to opentsdb database.}
-  spec.homepage      = ""
+  spec.description   = %q{sync with server asynchronusly in separate thread.}
+  spec.homepage      = "http://github.com/zben/metrics_logger"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
@@ -19,11 +19,11 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_development_dependency "bundler", "~> 1.6"
-  spec.add_development_dependency "rake"
-  spec.add_development_dependency "rspec"
-  spec.add_development_dependency "timecop"
+  spec.add_development_dependency "rake", "~> 0"
+  spec.add_development_dependency "rspec", "~> 0"
+  spec.add_development_dependency "timecop", "~> 0"
 
-  spec.add_runtime_dependency "faraday"
-  spec.add_runtime_dependency "thread_safe"
-  spec.add_runtime_dependency "json"
+  spec.add_runtime_dependency "faraday", "~> 0"
+  spec.add_runtime_dependency "thread_safe", "~> 0"
+  spec.add_runtime_dependency "json", "~> 0"
 end
