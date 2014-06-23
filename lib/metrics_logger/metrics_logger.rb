@@ -1,5 +1,9 @@
+require 'timeout'
+
 module MetricsLogger
   class MetricsLogger
+    TIMEOUT = 10
+
     def initialize
       @start_time_in_milliseconds = Time.now.to_f * 1000
     end
@@ -40,17 +44,24 @@ module MetricsLogger
 
       sub_type = "#{type}.#{key}"
 
-      queue[sub_type] ||= ThreadSafe::Array.new
+      Mutex.new.synchronize do
+        queue[sub_type] ||= ThreadSafe::Array.new
+      end
+
       queue[sub_type].push value
       nil
     end
 
     def self.queue
-      @queue ||= ThreadSafe::Hash.new
+      Mutex.new.synchronize do
+        @queue ||= ThreadSafe::Hash.new
+      end
     end
 
     def self.sampling_definitions
-      @sampling_definitions ||= ThreadSafe::Array.new
+      Mutex.new.synchronize do
+        @sampling_definitions ||= ThreadSafe::Array.new
+      end
     end
 
     def self.reset
@@ -85,10 +96,10 @@ module MetricsLogger
 
     def self.send_data(data)
       begin
-        Faraday.post(configuration.endpoint, data.to_json)
+        Timeout::timeout(TIMEOUT) { Faraday.post(configuration.endpoint, data.to_json) }
       rescue
         begin
-          Faraday.post(configuration.backup_endpoint, data.to_json)
+          Timeout::timeout(TIMEOUT) { Faraday.post(configuration.backup_endpoint, data.to_json) }
         rescue
           puts "#{Time.now} Cannot reach metrics server."
         end

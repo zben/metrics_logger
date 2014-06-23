@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.name          = "metrics_logger"
   spec.version       = MetricsLogger::VERSION
   spec.authors       = ["Ben Zhang"]
-  spec.email         = ["bzhang@legendben.com"]
+  spec.email         = ["benzhangpro@gmail.com"]
   spec.summary       = %q{sends application metrics to opentsdb database.}
   spec.description   = %q{sync with server asynchronusly in separate thread.}
   spec.homepage      = "http://github.com/zben/metrics_logger"
@@ -19,11 +19,11 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_development_dependency "bundler", "~> 1.6"
-  spec.add_development_dependency "rake", "~> 0"
-  spec.add_development_dependency "rspec", "~> 0"
-  spec.add_development_dependency "timecop", "~> 0"
+  spec.add_development_dependency "rake", "~> 10.3.2"
+  spec.add_development_dependency "rspec", "~> 3.0.0"
+  spec.add_development_dependency "timecop", "~> 0.7.1"
 
-  spec.add_runtime_dependency "faraday", "~> 0"
-  spec.add_runtime_dependency "thread_safe", "~> 0"
-  spec.add_runtime_dependency "json", "~> 0"
+  spec.add_runtime_dependency "faraday", "~> 0.9.0"
+  spec.add_runtime_dependency "thread_safe", "~> 0.3.4"
+  spec.add_runtime_dependency "json", "~> 1.8.1"
 end
