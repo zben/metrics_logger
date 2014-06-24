@@ -1,6 +1,6 @@
 # MetricsLogger
 
-For OpenTSDB data logging
+For OpenTSDB data logging. For duration data and arbitrary logged values, total, count, average values are calculated per minute interval and sent to the server every minute. The logger singleton runs in a separate thread so this gem works well with jruby which supports native threads. If endpoint returns error or times out, backup_endpoint is tried.
 
 ## Installation
 
@@ -28,29 +28,27 @@ Or install it yourself as:
 ```
 
 ### Logging Things
-#### log arbitrary values
+#### 1. log arbitrary values
 ```ruby
 MetricsLogger.log("metric_name", key_1: "value_1", key_2: "value_2")
 ```
 
-#### log duration with block
+#### 2. log duration with block
 ```ruby
 MetricsLogger.log_duration "metric_name" do 
   #do something
 end
 ```
-Note: Remember that variables declared inside the block will not be accessible outside the block. If you want to initialize a varaible and use it after block closes, declare the variable before the block.
+**Note: Remember that variables declared inside the block will not be accessible outside the block. If you want to initialize a varaible and use it after block closes, declare the variable before the block.**
 
-
-#### log duration without block
+#### 3. log duration without block
 ```ruby
 logger.MetricsLogger.new
-
 #do something
-
 logger.log_duration "metric_name"
 ```
-#### Log values once per minute
+
+#### 4. Log values once per minute
 ```ruby
 MetricsLogger.sample("metric_name", object: some_ruby_object, method: "count")
 ```
