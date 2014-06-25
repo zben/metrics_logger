@@ -44,8 +44,10 @@ module MetricsLogger
 
       sub_type = "#{type}.#{key}"
 
-      Mutex.new.synchronize do
-        queue[sub_type] ||= ThreadSafe::Array.new
+      if queue[sub_type].nil?
+        Mutex.new.synchronize do
+          queue[sub_type] ||= ThreadSafe::Array.new
+        end
       end
 
       queue[sub_type].push value
@@ -53,14 +55,22 @@ module MetricsLogger
     end
 
     def self.queue
-      Mutex.new.synchronize do
-        @queue ||= ThreadSafe::Hash.new
+      if @queue.nil?
+        Mutex.new.synchronize do
+          @queue ||= ThreadSafe::Hash.new
+        end
+      else
+        @queue
       end
     end
 
     def self.sampling_definitions
-      Mutex.new.synchronize do
-        @sampling_definitions ||= ThreadSafe::Array.new
+      if @sampling_definitions.nil?
+        Mutex.new.synchronize do
+          @sampling_definitions ||= ThreadSafe::Array.new
+        end
+      else
+        @sampling_definitions
       end
     end
 

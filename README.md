@@ -24,7 +24,7 @@ Or install it yourself as:
     config.app_name = "my_app" # used to make value key to opentsdb. eg: my_app.metric_name.total
     config.endpoint = "http://my_opentsdb_server:4242/api/put"
     config.backup_endpoint = "http://my_backup_opentsdb_server:4242/api/put"
-    config.interval = 60 #in seconds
+    config.sync_interval = 60 #in seconds
 ```
 
 ### Logging Things
