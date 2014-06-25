@@ -124,9 +124,11 @@ module MetricsLogger
       raise "Must specify app name in MetricsLogger configuration" unless configuration.app_name
       raise "Must specify endpoint in MetricsLogger configuration" unless configuration.endpoint
 
+      sync_time = 0
       while true
-        sleep configuration.sync_interval
-        sync
+        time_to_sleep = configuration.sync_interval - sync_time
+        sleep time_to_sleep if time_to_sleep > 0
+        sync_time = Benchmark.realtime { sync }
       end
     end
   end
